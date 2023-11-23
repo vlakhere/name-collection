@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Data Collection</title>
+</head>
+<body>
+    <h1>User Data Collection</h1>
+    <form id="userDataForm">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+        <button type="submit">Submit</button>
+    </form>
+
+    <script>
+        document.getElementById('userDataForm').addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            const name = document.getElementById('name').value;
+
+            // Make an HTTP request to the server to save the name
+            fetch('/submit', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ name }),
+            })
+            .then(response => response.text())
+            .then(data => {
+                console.log('Success:', data);
+                alert('Name successfully submitted!');
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error submitting name. Please try again.');
+            });
+        });
+    </script>
+</body>
+</html>
